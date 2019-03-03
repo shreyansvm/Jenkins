@@ -1,4 +1,10 @@
 pipeline {
+    enviornment {
+	MY_TESTLINUX_HOST   = credentails('MY_TESTLINUX_HOST')
+	MY_TESTLINUX_USER   = credentials('MY_TESTLINUX_USER')
+	MY_TESTLINUX_PASSWD = credentials('MY_TESTLINUX_PASSWD')
+	
+    }
     agent any
      
     stages {
@@ -17,6 +23,10 @@ pipeline {
             steps {
                 echo 'Testing ..\n'
 		sh 'cat Jenkinsfile'
+		sh 'chmod 777 telnet_shell_script.sh'
+		echo $MY_TESTLINUX_HOST
+		echo $MY_TESTLINUX_USER
+		echo $MY_TESTLINUX_PASSWD
             }
         }
         stage('Deploy') {

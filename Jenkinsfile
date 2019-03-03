@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    enviornment {
+    environment {
 	MY_TESTLINUX_HOST   = credentails('MY_TESTLINUX_HOST')
 	MY_TESTLINUX_USER   = credentials('MY_TESTLINUX_USER')
 	MY_TESTLINUX_PASSWD = credentials('MY_TESTLINUX_PASSWD')

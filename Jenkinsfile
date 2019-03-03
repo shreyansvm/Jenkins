@@ -1,15 +1,7 @@
 pipeline {
     environment {
-	#Define your enviornment variables
-
-	#Example -
-        #BUILD_SCRIPTS_GIT="http://10.100.100.10:7990/scm/~myname/mypipeline.git"
-        #BUILD_SCRIPTS='mypipeline'
-        #BUILD_HOME='/var/lib/jenkins/workspace'
-         
-        ### These credentials would have been configured in Jenkins GUI
-        #AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id')
-        #AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+	echo "Define your enviornment variables here .."
+	echo "\tif you need to use Passwords/AccessKeys, those can be added in Jenkins GUI and referenced here..\n"
     }
      
     agent any
@@ -18,38 +10,29 @@ pipeline {
         stage('Checkout: Code') {
             steps {
 		echo "Checking project code.."
-		#Example-
-                #sh "mkdir -p $WORKSPACE/repo;\
-                #git config --global user.email 'email@address.com';\
-                #git config --global user.name 'myname';\
-                #git config --global push.default simple;\
-                #git clone $BUILD_SCRIPTS_GIT repo/$BUILD_SCRIPTS"
-                #sh "chmod -R +x $WORKSPACE/repo/$BUILD_SCRIPTS"
+                echo "\tcall exact steps to checkout code from your project repo ..\n"
             }
         }
         stage('Yum: Updates') {
             steps {
-		echo "Updating .."
-		#Example -
-                #sh "sudo chmod +x $WORKSPACE/repo/$BUILD_SCRIPTS/scripts/update.sh"
-                #sh "sudo $WORKSPACE/repo/$BUILD_SCRIPTS/scripts/update.sh"
+		echo "Updating libraries (if required) ..\n"
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+                echo 'Testing ..\n'
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                echo 'Deploying ...\n'
             }
         }
     }
      
     post {
         always {
-            echo "Running post stages code.."
+            echo "Running post stages code ..\n"
         }
     }
 }

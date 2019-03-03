@@ -1,9 +1,4 @@
 pipeline {
-    environment {
-	echo "Define your enviornment variables here .."
-	echo "\tif you need to use Passwords/AccessKeys, those can be added in Jenkins GUI and referenced here..\n"
-    }
-     
     agent any
      
     stages {

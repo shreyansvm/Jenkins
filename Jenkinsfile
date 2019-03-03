@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout: Code') {
             steps {
-		echo "Checking project code.."
+		echo "Pulling project code.."
                 echo "\tcall exact steps to checkout code from your project repo ..\n"
             }
         }
@@ -16,6 +16,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing ..\n'
+		sh 'cat Jenkinsfile'
             }
         }
         stage('Deploy') {

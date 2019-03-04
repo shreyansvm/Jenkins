@@ -24,7 +24,6 @@ pipeline {
 		sh 'cat Jenkinsfile'
 		sh 'chmod 777 telnet_shell_script.sh'
                 sh 'printenv'
-		sh '$PWD'
             }
         }
         stage('Deploy') {

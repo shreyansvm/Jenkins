@@ -25,7 +25,6 @@ pipeline {
 		sh 'chmod 777 telnet_shell_script.sh'
                 sh 'printenv'
 		sh '$PWD'
-                sh 'cat $PWD/telnet_shell_script.sh'
             }
         }
         stage('Deploy') {

@@ -24,6 +24,7 @@ pipeline {
 		sh 'cat Jenkinsfile'
 		sh 'chmod 777 telnet_shell_script.sh'
                 sh 'printenv'
+		sh './telnet_shell_script.sh $MY_TESTLINUX_HOST $MY_TESTLINUX_USER $MY_TESTLINUX_PASSWD'
             }
         }
         stage('Deploy') {

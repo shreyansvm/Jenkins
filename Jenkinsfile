@@ -25,6 +25,8 @@ pipeline {
 		sh 'chmod 777 telnet_shell_script.sh'
                 sh 'printenv'
                 sh 'cat telnet_shell_script.sh'
+                sh 'chmod 777 test_shell_script.sh'
+                sh 'cat test_shell_script.sh'
    		sh 'sleep 5'
             }
         }

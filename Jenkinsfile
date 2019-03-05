@@ -25,7 +25,7 @@ pipeline {
 		sh 'chmod 777 telnet_shell_script.sh'
                 sh 'printenv'
                 sh 'cat telnet_shell_script.sh'
-   		sh 'which expect'
+   		which expect
             }
         }
         stage('Deploy') {

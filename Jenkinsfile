@@ -28,6 +28,7 @@ pipeline {
                 sh 'chmod 777 test_shell_script.sh'
                 sh 'cat test_shell_script.sh'
    		sh 'sleep 5'
+                sh './test_shell_script.sh'
             }
         }
         stage('Deploy') {

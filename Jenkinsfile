@@ -45,7 +45,7 @@ pipeline {
                 	echo "In Test-SSH stage\n"
                         sshagent(['SSH_testlinux_username_passwd']) {
 				sh 'pwd'
-				sh 'ls -lrt'
+				sh 'ssh -o StrictHostKeyChecking=no -l $MY_TESTLINUX_USER $MY_TESTLINUX_HOST uname -a'
 				echo "Inside Test-SSH stage, ssh-agent block"
 			}
 		}

@@ -48,6 +48,7 @@ pipeline {
             }
         }
 	stage('Test-SSH') {
+		sshCommand remote: remote, command: "ls -lrt"
                 steps {
                 	echo "In Test-SSH stage\n"
                         sshagent(['SSH_testlinux_username_passwd']) {

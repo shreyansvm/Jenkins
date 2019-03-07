@@ -47,7 +47,9 @@ pipeline {
   				remote.allowAnyHosts = true 
 			} 
 		}
-                echo "In Test-SSH stage\n"
+                steps {
+                	echo "In Test-SSH stage\n"
+		}
 	}
         stage('Deploy') {
             steps {

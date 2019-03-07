@@ -36,6 +36,18 @@ pipeline {
                 echo 'Deploying ...\n'
             }
         }
+	node {
+  	    def remote = [:]
+	    remote.name = 'testlinux'
+ 	    remote.host = $MY_TESTLINUX_HOST
+            remote.user = $MY_TESTLINUX_USER
+            remote.password = $MY_TESTLINUX_PASSWD
+            remote.allowAnyHosts = true
+            stage('Remote SSH') {
+                sshCommand remote: remote, command: "ls -lrt"
+    	        sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
+  	    }
+	}
     }
      
     post {

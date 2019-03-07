@@ -8,7 +8,9 @@ pipeline {
     }
     stages {
 	stage('Build-Details') {
+	    steps {
 		echo "Running ${env.JOB_NAME} ${env.BUILD_ID} on ${env.JENKINS_URL}"
+	    }
 	}
         stage('Checkout: Code') {
             steps {

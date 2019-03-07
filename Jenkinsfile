@@ -31,14 +31,22 @@ pipeline {
                 sh './test_shell_script.sh'
 		withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
    		    echo "inside withCrendentials block\n"
-		    sh 'sshpass -p $linux_pass ssh $linux_user@$linux_host "ls; hostname; whois google.com;"'
+		}
+		sshagent(['SSH_testlinux_username_passwd']){
+			withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
+				sh '
+				   ls -lrt
+				   '
+			}
 		}
 
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying ...\n'
+		if(currentBuild.currentResult == "SUCCESS") {
+                	echo 'Current Build is successful.. Deploying ...\n'
+		}
             }
         }
     }

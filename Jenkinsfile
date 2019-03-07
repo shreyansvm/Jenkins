@@ -38,6 +38,9 @@ pipeline {
 	stage('Test-SSH') {
                 steps {
                 	echo "In Test-SSH stage\n"
+                        ssh-agent(['SSH_testlinux_username_passwd']) {
+				echo "Inside Test-SSH stage, ssh-agent block"
+			}
 		}
 	}
         stage('Deploy') {

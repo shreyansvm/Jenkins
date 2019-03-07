@@ -44,6 +44,8 @@ pipeline {
                 steps {
                 	echo "In Test-SSH stage\n"
                         sshagent(['SSH_testlinux_username_passwd']) {
+				sh 'pwd'
+				sh 'ls -lrt'
 				echo "Inside Test-SSH stage, ssh-agent block"
 			}
 		}

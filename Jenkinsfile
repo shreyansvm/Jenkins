@@ -42,9 +42,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-		if(currentBuild.currentResult == "SUCCESS") {
                 	echo 'Current Build is successful.. Deploying ...\n'
-		}
             }
         }
     }

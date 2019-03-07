@@ -59,5 +59,8 @@ pipeline {
         always {
             echo "Always running post stages code ..\n"
         }
+        failure {
+            echo "Jenkins job - ${env.JOB_NAME} build-id - ${env.BUILD_ID} running on ${env.JENKINS_URL} has FAILED"
+	}
     }
 }

@@ -7,17 +7,18 @@ pipeline {
 	
     }
     stages {
+	stage('Build-Details') {
+		echo "Running ${env.JOB_NAME} ${env.BUILD_ID} on ${env.JENKINS_URL}"
+	}
         stage('Checkout: Code') {
             steps {
 		echo "Pulling project code.."
                 echo "\tcall exact steps to checkout code from your project repo ..\n"
             }
         }
-        stage('Yum: Updates') {
+        stage('Updates') {
             steps {
 		echo "Updating libraries (if required) ..\n"
-                echo "Installing sshpass... .. ."
-                sh 'yum install sshpass'
             }
         }
         stage('Test') {

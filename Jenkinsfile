@@ -34,9 +34,7 @@ pipeline {
 		}
 		sshagent(['SSH_testlinux_username_passwd']){
 			withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
-				sh '
-				   ls -lrt
-				   '
+			    echo "Inside sshagent withCredentials..\n"
 			}
 		}
 

@@ -17,7 +17,7 @@ pipeline {
             steps {
 		echo "Updating libraries (if required) ..\n"
                 echo "Installing sshpass... .. ."
-                sh 'sudo yum install sshpass'
+                sh 'yum install sshpass'
             }
         }
         stage('Test') {

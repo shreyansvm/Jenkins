@@ -36,14 +36,6 @@ pipeline {
             }
         }
 	stage('Test-SSH') {
-			node('Test-ssh-node') {
-				def remote = [:]
-  				remote.name = 'testlinux12'
-  				remote.host = $MY_TESTLINUX_HOST
- 				remote.user = $MY_TESTLINUX_USER
-  				remote.password = $MY_TESTLINUX_PASSWD
-  				remote.allowAnyHosts = true
-			} 
                 steps {
                 	echo "In Test-SSH stage\n"
 		}

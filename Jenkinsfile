@@ -32,14 +32,23 @@ pipeline {
 		withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
    		    echo "inside withCrendentials block\n"
 		}
-		sshagent(['SSH_testlinux_username_passwd']){
-			withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
-			    echo "Inside sshagent withCredentials..\n"
-			}
-		}
 
             }
         }
+	stage('Test-SSH') {
+		agent {
+			node { 
+				label 'Node-Test-SSH'
+				def remote = [:]
+  				remote.name = 'testlinux12'
+  				remote.host = $MY_TESTLINUX_HOST
+ 				remote.user = $MY_TESTLINUX_USER
+  				remote.password = $MY_TESTLINUX_PASSWD
+  				remote.allowAnyHosts = true 
+			} 
+		}
+                echo "In Test-SSH stage\n"
+	}
         stage('Deploy') {
             steps {
                 	echo 'Current Build is successful.. Deploying ...\n'
@@ -49,7 +58,7 @@ pipeline {
      
     post {
         always {
-            echo "Running post stages code ..\n"
+            echo "Always running post stages code ..\n"
         }
     }
 }

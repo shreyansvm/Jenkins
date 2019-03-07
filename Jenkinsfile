@@ -29,6 +29,10 @@ pipeline {
                 sh 'cat test_shell_script.sh'
    		sh 'sleep 5'
                 sh './test_shell_script.sh'
+		withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
+   		    echo "inside withCrendentials block\n"
+		}
+
             }
         }
         stage('Deploy') {
@@ -36,18 +40,6 @@ pipeline {
                 echo 'Deploying ...\n'
             }
         }
-	node {
-  	    def remote = [:]
-	    remote.name = 'testlinux'
- 	    remote.host = $MY_TESTLINUX_HOST
-            remote.user = $MY_TESTLINUX_USER
-            remote.password = $MY_TESTLINUX_PASSWD
-            remote.allowAnyHosts = true
-            stage('Remote SSH') {
-                sshCommand remote: remote, command: "ls -lrt"
-    	        sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
-  	    }
-	}
     }
      
     post {

@@ -49,7 +49,11 @@ pipeline {
         }
 	stage('Test-SSH') {
                 steps {
-			sshCommand remote: remote, command: "ls -lrt"
+			withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
+				remote.user = linux_user
+				remote.password = linux_pass
+			}
+			sshCommand remote: remote, command: "pwd"
                 	echo "In Test-SSH stage\n"
                         sshagent(['SSH_testlinux_username_passwd']) {
 				sh 'pwd'

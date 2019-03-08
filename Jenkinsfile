@@ -48,22 +48,25 @@ pipeline {
 	MY_TESTLINUX_PASSWD = credentials('MY_TESTLINUX_PASSWD')
     }
 
+    /*
     parameters {
-	// The parameters directive provides a list of parameters which a user should provide when triggering the Pipeline. 
-	// The values for these user-specified parameters are made available to Pipeline steps via the params object.
-	// Example :
-	string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-	// 	Later in the stages->stage->steps it can be access as :
-	//		echo "Hello ${params.PERSON}"
+		// The parameters directive provides a list of parameters which a user should provide when triggering the Pipeline. 
+		// The values for these user-specified parameters are made available to Pipeline steps via the params object.
+		// Example :
+		// string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+		// 	Later in the stages->stage->steps it can be access as :
+		//		echo "Hello ${params.PERSON}"
     }
+    */
 
     triggers {
-	// The triggers directive defines the automated ways in which the Pipeline should be re-triggered.
-	// For Pipelines which are integrated with a source such as GitHub or BitBucket, triggers may not be necessary as webhooks-based integration will likely already be present. 
-	// The triggers currently available are cron, pollSCM and upstream.
-	// 	Example : cron('H */4 * * 1-5')
+		// The triggers directive defines the automated ways in which the Pipeline should be re-triggered.
+		// For Pipelines which are integrated with a source such as GitHub or BitBucket, triggers may not be necessary as webhooks-based integration will likely already be present. 
+		// The triggers currently available are cron, pollSCM and upstream.
+		// 	Example : cron('H */4 * * 1-5')
 
-	pollSCM('* * * * *')
+		// At minute 1 past every hour on every day-of-week from Monday through Friday.
+		pollSCM('1 */1 * * 1-5')
     }
 
     stages {
@@ -130,7 +133,7 @@ pipeline {
 					Name of an environment variable to be set to the username during the build. (optional)
 					Type: String
 				*/
-				
+
 				remote.user = userName
         		remote.identityFile = identity
 			}

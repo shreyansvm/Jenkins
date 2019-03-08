@@ -8,12 +8,39 @@ remote.allowAnyHosts = true
 
 pipeline {
     agent any
+    options {
+	// Specifying a global execution timeout of one hour, after which Jenkins will abort the Pipeline run.
+        timeout(time: 180, unit: 'SECONDS')
+	timestamps() 
+    }
+
     environment {
+	// specifies a sequence of key-value pairs which will be defined as environment variables for the all steps, or stage-specific steps, depending on where the environment directive is located within the Pipeline.
+
 	MY_TESTLINUX_HOST   = credentials('MY_TESTLINUX_HOST')
 	MY_TESTLINUX_USER   = credentials('MY_TESTLINUX_USER')
 	MY_TESTLINUX_PASSWD = credentials('MY_TESTLINUX_PASSWD')
     }
+
+    parameters {
+	// The parameters directive provides a list of parameters which a user should provide when triggering the Pipeline. 
+	// The values for these user-specified parameters are made available to Pipeline steps via the params object.
+	// Example :
+	//	string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+	// 	Later in the stages->stage->steps it can be access as :
+	//		echo "Hello ${params.PERSON}"
+    }
+
+    triggers {
+	// The triggers directive defines the automated ways in which the Pipeline should be re-triggered.
+	// For Pipelines which are integrated with a source such as GitHub or BitBucket, triggers may not be necessary as webhooks-based integration will likely already be present. 
+	// The triggers currently available are cron, pollSCM and upstream.
+	// 	Example : cron('H */4 * * 1-5')
+    }
+
     stages {
+	// Containing a sequence of one or more stage directives, the stages section is where the bulk of the "work" described by a Pipeline will be located.	
+
 	stage('Build-Details') {
 	    steps {
 		echo "Running ${env.JOB_NAME} ${env.BUILD_ID} on ${env.JENKINS_URL}"
@@ -54,10 +81,10 @@ pipeline {
 				echo "linux_host - $linux_host"
 				echo "linux_user - $linux_user"
 				
-				//remote.name = $MY_TESTLINUX_USER
-				//remote.host = $MY_TESTLINUX_HOST
-				//remote.user = $MY_TESTLINUX_USER
-				//remote.password = $MY_TESTLINUX_PASSWD
+				remote.name = $MY_TESTLINUX_USER
+				remote.host = $MY_TESTLINUX_HOST
+				remote.user = $MY_TESTLINUX_USER
+				remote.password = $MY_TESTLINUX_PASSWD
 			}
 
 			sshCommand remote: remote, command: "pwd"
@@ -78,6 +105,9 @@ pipeline {
     }
      
     post {
+	// The post section defines one or more additional steps that are run upon the completion of a Pipeline’s or stage’s run (depending on the location of the post section within the Pipeline).
+	// 'post' can support any of of the following post-condition blocks: always, changed, fixed, regression, aborted, failure, success, unstable, unsuccessful, and cleanup. 
+
         always {
             echo "Always running post stages code ..\n"
         }

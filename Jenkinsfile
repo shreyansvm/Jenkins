@@ -30,14 +30,16 @@ withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_hos
 
 node {
 	sh 'printenv'
-	def remote = [:]
-	remote.allowAnyHosts = true
-	remote.name = "smulkutk"
-	remote.host = "testlinux12.us.alcatel-lucent.com"
-	remote.user = "smulkutk"
-	remote.password = "tigris"
+}
 
-	pipeline {
+def remote = [:]
+remote.allowAnyHosts = true
+remote.name = "smulkutk"
+remote.host = "testlinux12.us.alcatel-lucent.com"
+remote.user = "smulkutk"
+remote.password = "tigris"
+
+pipeline {
     agent any
     options {
 		// Specifying a global execution timeout of one hour, after which Jenkins will abort the Pipeline run.
@@ -159,5 +161,3 @@ node {
 		}
     }
 }
-}
-

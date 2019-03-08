@@ -117,28 +117,25 @@ pipeline {
 	    }
 
 		stage('Test-SSH') {
-			node('test-ssh-node') {
-				echo "Inside test-ssh-node"
-		        steps {
+	        steps {
 
-					withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
-						echo "linux_host - $linux_host"
-						echo "linux_user - $linux_user"
-						
-						// remote.name = $MY_TESTLINUX_USER
-						// remote.host = $MY_TESTLINUX_HOST
-						// remote.user = $MY_TESTLINUX_USER
-						// remote.password = $MY_TESTLINUX_PASSWD
-					}
+				withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
+					echo "linux_host - $linux_host"
+					echo "linux_user - $linux_user"
+					
+					// remote.name = $MY_TESTLINUX_USER
+					// remote.host = $MY_TESTLINUX_HOST
+					// remote.user = $MY_TESTLINUX_USER
+					// remote.password = $MY_TESTLINUX_PASSWD
+				}
 
-					sshCommand remote: remote, command: "pwd"
-					sshCommand remote: remote, command: "./run_mg_express.sh"
+				sshCommand remote: remote, command: "pwd"
+				sshCommand remote: remote, command: "./run_mg_express.sh"
 
-					echo "In Test-SSH stage\n"
-					sshagent(['SSH_testlinux_username_passwd']) {
-						sh 'pwd'
-						echo "Inside Test-SSH stage, ssh-agent block"
-					}
+				echo "In Test-SSH stage\n"
+				sshagent(['SSH_testlinux_username_passwd']) {
+					sh 'pwd'
+					echo "Inside Test-SSH stage, ssh-agent block"
 				}
 			}
 		}

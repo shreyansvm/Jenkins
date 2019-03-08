@@ -26,7 +26,7 @@ withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_hos
 
 def remote = [:]
 remote.allowAnyHosts = true
-remote.name = "smulkutk"
+remote.name = return_linux_user()
 remote.host = "smulkutk.abc.com"
 remote.user = "smulkutk"
 remote.password = "smulkutk"

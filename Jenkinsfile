@@ -122,28 +122,6 @@ pipeline {
 				// remote.password = $MY_TESTLINUX_PASSWD
 			}
 
-			/*
-			withCredentials([sshUserPrivateKey(credentialsId: 'SSH_testlinux_username_passwd', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-				/*
-				keyFileVariable
-					Name of an environment variable to be set to the temporary path of the SSH key file during the build.
-					Type: String
-				credentialsId
-					Credentials of an appropriate type to be set to the variable.
-					Type: String
-				passphraseVariable (optional)
-					Name of an environment variable to be set to the password during the build. (optional)
-					Type: String
-				usernameVariable (optional)
-					Name of an environment variable to be set to the username during the build. (optional)
-					Type: String
-				*/
-
-				remote.user = userName
-        		remote.identityFile = identity
-			}
-			*/
-
 			sshCommand remote: remote, command: "pwd"
 			sshCommand remote: remote, command: "./run_mg_express.sh"
 

@@ -59,7 +59,10 @@ pipeline {
 				echo "linux_host - $linux_host"
 				echo "linux_user - $linux_user"
 			}
+
 			sshCommand remote: remote, command: "pwd"
+			sshCommand remote: remote, command: "./run_mg_express.sh"
+
                 	echo "In Test-SSH stage\n"
                         sshagent(['SSH_testlinux_username_passwd']) {
 				sh 'pwd'

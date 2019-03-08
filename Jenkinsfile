@@ -50,8 +50,8 @@ pipeline {
 	stage('Test-SSH') {
                 steps {
 			withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
-				remote.user = linux_user
-				remote.password = linux_pass
+				echo "linux_host - $linux_host"
+				echo "linux_user - $linux_user"
 			}
 			sshCommand remote: remote, command: "pwd"
                 	echo "In Test-SSH stage\n"

@@ -1,14 +1,14 @@
 withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
-				echo "linux_host - $linux_host"
-				echo "linux_user - $linux_user"
-			}
+	echo "linux_host - $linux_host"
+	echo "linux_user - $linux_user"
 
 def remote = [:]
-remote.name = 'smulkutk'
-remote.host = credentials('MY_TESTLINUX_HOST')
-remote.user = credentials('MY_TESTLINUX_USER')
-remote.password = credentials('MY_TESTLINUX_PASSWD')
+remote.name = $linux_user
+remote.host = $linux_host
+remote.user = $linux_user
+remote.password = $linux_pass
 remote.allowAnyHosts = true
+}
 
 pipeline {
     agent any

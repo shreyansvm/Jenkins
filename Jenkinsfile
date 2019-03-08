@@ -12,7 +12,7 @@ pipeline {
 	MY_TESTLINUX_USER   = credentials('MY_TESTLINUX_USER')
 	MY_TESTLINUX_PASSWD = credentials('MY_TESTLINUX_PASSWD')
 	
-	remote.name = credentials('MY_TESTLINUX_USER').toString()
+	remote.name = string(credentials('MY_TESTLINUX_USER'))
 	remote.host = "${env.MY_TESTLINUX_HOST}"
 	remote.user = "${env.MY_TESTLINUX_USER}"
 	remote.password = "${env.MY_TESTLINUX_PASSWS}"

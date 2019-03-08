@@ -1,3 +1,24 @@
+def return_linux_host() {
+	withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host')]) {
+		echo "\tReturning linux_host"
+		return $linux_host
+	}
+}
+
+def return_linux_user() {
+	withCredentials([string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user')]) {
+		echo "\tReturning linux_user"
+		return $linux_user
+	}
+}
+
+def return_linux_pass() {
+	withCredentials([string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
+		echo "\tReturning linux_pass"
+		return $linux_pass
+	}
+}
+
 withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
 	echo "linux_host - $linux_host"
 	echo "linux_user - $linux_user"

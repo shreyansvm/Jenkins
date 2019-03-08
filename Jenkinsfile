@@ -1,3 +1,8 @@
+withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
+				echo "linux_host - $linux_host"
+				echo "linux_user - $linux_user"
+			}
+
 def remote = [:]
 remote.name = 'smulkutk'
 remote.host = credentials('MY_TESTLINUX_HOST')

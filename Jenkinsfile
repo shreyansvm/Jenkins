@@ -32,6 +32,13 @@ node {
 	sh 'printenv'
 }
 
+def remote = [:]
+remote.allowAnyHosts = true
+remote.name = "smulkutk"
+remote.host = "testlinux12.us.alcatel-lucent.com"
+remote.user = "smulkutk"
+remote.password = "tigris"
+
 pipeline {
     agent any
     options {
@@ -70,84 +77,75 @@ pipeline {
 		pollSCM('1 */1 * * 1-5')
     }
 
-    node {
-		def remote = [:]
-		remote.allowAnyHosts = true
-		remote.name = "smulkutk"
-		remote.host = "testlinux12.us.alcatel-lucent.com"
-		remote.user = "smulkutk"
-		remote.password = "tigris"
+    stages {
+	// Containing a sequence of one or more stage directives, the stages section is where the bulk of the "work" described by a Pipeline will be located.	
 
-	    stages {
-		// Containing a sequence of one or more stage directives, the stages section is where the bulk of the "work" described by a Pipeline will be located.	
-
-			stage('Build-Details') {
-			    steps {
-					echo "Running ${env.JOB_NAME} ${env.BUILD_ID} on ${env.JENKINS_URL}"
-			    }
-			}
-
-		    stage('Checkout: Code') {
-		        steps {
-					echo "Pulling project code.."
-		            echo "\tcall exact steps to checkout code from your project repo ..\n"
-		        }
+		stage('Build-Details') {
+		    steps {
+				echo "Running ${env.JOB_NAME} ${env.BUILD_ID} on ${env.JENKINS_URL}"
 		    }
+		}
 
-		    stage('Updates') {
-		        steps {
-					echo "Updating libraries (if required) ..\n"
-		        }
-		    }
-		    stage('Test') {
-		        steps {
-		            echo 'Testing ..\n'
-					sh 'cat Jenkinsfile'
-					sh 'chmod 777 telnet_shell_script.sh'
-					sh 'printenv'
-					sh 'cat telnet_shell_script.sh'
-					sh 'chmod 777 test_shell_script.sh'
-					sh 'cat test_shell_script.sh'
-					sh 'sleep 5'
-					sh './test_shell_script.sh'
+	    stage('Checkout: Code') {
+	        steps {
+				echo "Pulling project code.."
+	            echo "\tcall exact steps to checkout code from your project repo ..\n"
+	        }
+	    }
+
+	    stage('Updates') {
+	        steps {
+				echo "Updating libraries (if required) ..\n"
+	        }
+	    }
+	    stage('Test') {
+	        steps {
+	            echo 'Testing ..\n'
+				sh 'cat Jenkinsfile'
+				sh 'chmod 777 telnet_shell_script.sh'
+				sh 'printenv'
+				sh 'cat telnet_shell_script.sh'
+				sh 'chmod 777 test_shell_script.sh'
+				sh 'cat test_shell_script.sh'
+				sh 'sleep 5'
+				sh './test_shell_script.sh'
+				
+				withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
+					    echo "inside withCrendentials block\n"
+				}
+	        }
+	    }
+
+		stage('Test-SSH') {
+	        steps {
+
+				withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
+					echo "linux_host - $linux_host"
+					echo "linux_user - $linux_user"
 					
-					withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
-						    echo "inside withCrendentials block\n"
-					}
-		        }
-		    }
+					// remote.name = $MY_TESTLINUX_USER
+					// remote.host = $MY_TESTLINUX_HOST
+					// remote.user = $MY_TESTLINUX_USER
+					// remote.password = $MY_TESTLINUX_PASSWD
+				}
 
-			stage('Test-SSH') {
-		        steps {
+				sshCommand remote: remote, command: "pwd"
+				sshCommand remote: remote, command: "./run_mg_express.sh"
 
-					withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
-						echo "linux_host - $linux_host"
-						echo "linux_user - $linux_user"
-						
-						// remote.name = $MY_TESTLINUX_USER
-						// remote.host = $MY_TESTLINUX_HOST
-						// remote.user = $MY_TESTLINUX_USER
-						// remote.password = $MY_TESTLINUX_PASSWD
-					}
-
-					sshCommand remote: remote, command: "pwd"
-					sshCommand remote: remote, command: "./run_mg_express.sh"
-
-					echo "In Test-SSH stage\n"
-					sshagent(['SSH_testlinux_username_passwd']) {
-						sh 'pwd'
-						echo "Inside Test-SSH stage, ssh-agent block"
-					}
+				echo "In Test-SSH stage\n"
+				sshagent(['SSH_testlinux_username_passwd']) {
+					sh 'pwd'
+					echo "Inside Test-SSH stage, ssh-agent block"
 				}
 			}
-		    
-			stage('Deploy') {
-				steps {
-					echo 'Current Build is successful.. Deploying ...\n'
-			    }
-			}
-	    
 		}
+	    
+		stage('Deploy') {
+			steps {
+				echo 'Current Build is successful.. Deploying ...\n'
+		    }
+		}
+    
 	}
      
     post {

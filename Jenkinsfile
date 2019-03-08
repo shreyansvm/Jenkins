@@ -5,7 +5,9 @@ withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_hos
 
 pipeline {
     agent any
-    def remote = [:]
+    node {
+    	def remote = [:]
+    }
     environment {
 	MY_TESTLINUX_HOST   = credentials('MY_TESTLINUX_HOST')
 	MY_TESTLINUX_USER   = credentials('MY_TESTLINUX_USER')

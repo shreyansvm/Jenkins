@@ -54,11 +54,10 @@ pipeline {
 				echo "linux_host - $linux_host"
 				echo "linux_user - $linux_user"
 				
-				def remote =[:]
-				remote.name = $MY_TESTLINUX_USER
-				remote.host = $MY_TESTLINUX_HOST
-				remote.user = $MY_TESTLINUX_USER
-				remote.password = $MY_TESTLINUX_PASSWD
+				//remote.name = $MY_TESTLINUX_USER
+				//remote.host = $MY_TESTLINUX_HOST
+				//remote.user = $MY_TESTLINUX_USER
+				//remote.password = $MY_TESTLINUX_PASSWD
 			}
 
 			sshCommand remote: remote, command: "pwd"

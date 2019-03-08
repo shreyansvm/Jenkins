@@ -28,6 +28,8 @@ withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_hos
 	echo "linux_user - $linux_user"
 }
 
+sh 'printenv'
+
 def remote = [:]
 remote.allowAnyHosts = true
 remote.name = "smulkutk"

@@ -5,6 +5,7 @@ withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_hos
 
 def remote = [:]
 remote.allowAnyHosts = true
+echo "linux_host outside - $linux_host"
 
 pipeline {
     agent any

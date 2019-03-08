@@ -6,6 +6,10 @@ withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_hos
 def remote = [:]
 remote.allowAnyHosts = true
 echo "linux_host outside - $linux_host"
+remote.name = "smulkutk"
+remote.host = "smulkutk.abc.com"
+remote.user = "smulkutk"
+remote.password = "smulkutk"
 
 pipeline {
     agent any
@@ -85,10 +89,10 @@ pipeline {
 				echo "linux_host - $linux_host"
 				echo "linux_user - $linux_user"
 				
-				remote.name = $MY_TESTLINUX_USER
-				remote.host = $MY_TESTLINUX_HOST
-				remote.user = $MY_TESTLINUX_USER
-				remote.password = $MY_TESTLINUX_PASSWD
+				// remote.name = $MY_TESTLINUX_USER
+				// remote.host = $MY_TESTLINUX_HOST
+				// remote.user = $MY_TESTLINUX_USER
+				// remote.password = $MY_TESTLINUX_PASSWD
 			}
 
 			sshCommand remote: remote, command: "pwd"

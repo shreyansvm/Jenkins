@@ -3,6 +3,13 @@ withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_hos
 	echo "linux_user - $linux_user"
 }
 
+def remote = [:]
+remote.name = "smulkutk"
+remote.host = "testlinux12.us.alcatel-lucent.com"
+remote.user = "smulkutk"
+remote.password = "tigris"
+remote.allowAnyHosts = true
+
 pipeline {
     agent any
     environment {
@@ -47,12 +54,6 @@ pipeline {
         }
 	stage('Test-SSH') {
                 steps {
-			def remote = [:]
-			remote.name = $MY_TESTLINUX_USER
-			remote.host = $MY_TESTLINUX_HOST
-			remote.user = $MY_TESTLINUX_USER
-			remote.password = $MY_TESTLINUX_PASSWD
-			remote.allowAnyHosts = true
 
 			withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
 				echo "linux_host - $linux_host"

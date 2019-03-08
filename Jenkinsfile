@@ -4,6 +4,7 @@ withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_hos
 }
 
 def remote = [:]
+remote.allowAnyHosts = true
 
 pipeline {
     agent any
@@ -52,12 +53,12 @@ pipeline {
 			withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
 				echo "linux_host - $linux_host"
 				echo "linux_user - $linux_user"
+				
+				remote.name = $MY_TESTLINUX_USER
+				remote.host = $MY_TESTLINUX_HOST
+				remote.user = $MY_TESTLINUX_USER
+				remote.password = $MY_TESTLINUX_PASSWD
 			}
-
-			remote.name = $MY_TESTLINUX_USER
-			remote.host = $MY_TESTLINUX_HOST
-			remote.user = $MY_TESTLINUX_USER
-			remote.password = $MY_TESTLINUX_PASSWD	
 
 			sshCommand remote: remote, command: "pwd"
 			sshCommand remote: remote, command: "./run_mg_express.sh"

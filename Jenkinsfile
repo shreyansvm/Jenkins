@@ -1,3 +1,4 @@
+// doesn't work. returns "linux_host"
 def return_linux_host() {
 	withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host')]) {
 		echo "\tReturning linux_host"
@@ -5,6 +6,7 @@ def return_linux_host() {
 	}
 }
 
+// doesn't work. returns "linux_user"
 def return_linux_user() {
 	withCredentials([string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user')]) {
 		echo "\tReturning linux_user"
@@ -12,12 +14,14 @@ def return_linux_user() {
 	}
 }
 
+// doesn't work. returns "linux_pass"
 def return_linux_pass() {
 	withCredentials([string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
 		echo "\tReturning linux_pass"
 		return $linux_pass
 	}
 }
+
 
 withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
 	echo "linux_host - $linux_host"
@@ -26,10 +30,10 @@ withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_hos
 
 def remote = [:]
 remote.allowAnyHosts = true
-remote.name = return_linux_user()
-remote.host = "smulkutk.abc.com"
+remote.name = "smulkutk"
+remote.host = "testlinux12.us.alcatel-lucent.com"
 remote.user = "smulkutk"
-remote.password = "smulkutk"
+remote.password = "tigris"
 
 pipeline {
     agent any
@@ -118,6 +122,7 @@ pipeline {
 				// remote.password = $MY_TESTLINUX_PASSWD
 			}
 
+			/*
 			withCredentials([sshUserPrivateKey(credentialsId: 'SSH_testlinux_username_passwd', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
 				/*
 				keyFileVariable
@@ -137,6 +142,7 @@ pipeline {
 				remote.user = userName
         		remote.identityFile = identity
 			}
+			*/
 
 			sshCommand remote: remote, command: "pwd"
 			sshCommand remote: remote, command: "./run_mg_express.sh"

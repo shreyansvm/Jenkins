@@ -28,14 +28,16 @@ withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_hos
 	echo "linux_user - $linux_user"
 }
 
-sh 'printenv'
+node {
+	sh 'printenv'
+	def remote = [:]
+	remote.allowAnyHosts = true
+	remote.name = "smulkutk"
+	remote.host = "testlinux12.us.alcatel-lucent.com"
+	remote.user = "smulkutk"
+	remote.password = "tigris"
+}
 
-def remote = [:]
-remote.allowAnyHosts = true
-remote.name = "smulkutk"
-remote.host = "testlinux12.us.alcatel-lucent.com"
-remote.user = "smulkutk"
-remote.password = "tigris"
 
 pipeline {
     agent any

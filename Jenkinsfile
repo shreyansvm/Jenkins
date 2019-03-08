@@ -11,7 +11,8 @@ pipeline {
     options {
 	// Specifying a global execution timeout of one hour, after which Jenkins will abort the Pipeline run.
         timeout(time: 180, unit: 'SECONDS')
-	timestamps() 
+	
+	// timestamps() 
     }
 
     environment {
@@ -26,7 +27,7 @@ pipeline {
 	// The parameters directive provides a list of parameters which a user should provide when triggering the Pipeline. 
 	// The values for these user-specified parameters are made available to Pipeline steps via the params object.
 	// Example :
-	//	string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+	string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
 	// 	Later in the stages->stage->steps it can be access as :
 	//		echo "Hello ${params.PERSON}"
     }
@@ -36,6 +37,8 @@ pipeline {
 	// For Pipelines which are integrated with a source such as GitHub or BitBucket, triggers may not be necessary as webhooks-based integration will likely already be present. 
 	// The triggers currently available are cron, pollSCM and upstream.
 	// 	Example : cron('H */4 * * 1-5')
+
+	pollSCM('* * * * *')
     }
 
     stages {

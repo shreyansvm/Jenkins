@@ -3,10 +3,10 @@ withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_hos
 	echo "linux_user - $linux_user"
 
 def remote = [:]
-remote.name = $linux_user
-remote.host = $linux_host
-remote.user = $linux_user
-remote.password = $linux_pass
+remote.name = ${linux_user}
+remote.host = ${linux_host}
+remote.user = ${linux_user}
+remote.password = ${linux_pass}
 remote.allowAnyHosts = true
 }
 

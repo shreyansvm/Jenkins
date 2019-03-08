@@ -1,5 +1,5 @@
 def remote = [:]
-remote.name = 'testlinux12'
+remote.name = 'smulkutk'
 remote.host = credentials('MY_TESTLINUX_HOST')
 remote.user = credentials('MY_TESTLINUX_USER')
 remote.password = credentials('MY_TESTLINUX_PASSWD')

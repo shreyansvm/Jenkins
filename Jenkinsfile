@@ -11,11 +11,6 @@ pipeline {
 	MY_TESTLINUX_HOST   = credentials('MY_TESTLINUX_HOST')
 	MY_TESTLINUX_USER   = credentials('MY_TESTLINUX_USER')
 	MY_TESTLINUX_PASSWD = credentials('MY_TESTLINUX_PASSWD')
-	
-	remote.name = string(credentials('MY_TESTLINUX_USER'))
-	remote.host = "${env.MY_TESTLINUX_HOST}"
-	remote.user = "${env.MY_TESTLINUX_USER}"
-	remote.password = "${env.MY_TESTLINUX_PASSWS}"
     }
     stages {
 	stage('Build-Details') {
@@ -58,6 +53,11 @@ pipeline {
 				echo "linux_host - $linux_host"
 				echo "linux_user - $linux_user"
 			}
+
+			remote.name = $MY_TESTLINUX_USER
+			remote.host = $MY_TESTLINUX_HOST
+			remote.user = $MY_TESTLINUX_USER
+			remote.password = $MY_TESTLINUX_PASSWD	
 
 			sshCommand remote: remote, command: "pwd"
 			sshCommand remote: remote, command: "./run_mg_express.sh"

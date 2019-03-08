@@ -36,10 +36,8 @@ node {
 	remote.host = "testlinux12.us.alcatel-lucent.com"
 	remote.user = "smulkutk"
 	remote.password = "tigris"
-}
 
-
-pipeline {
+	pipeline {
     agent any
     options {
 		// Specifying a global execution timeout of one hour, after which Jenkins will abort the Pipeline run.
@@ -161,3 +159,5 @@ pipeline {
 		}
     }
 }
+}
+

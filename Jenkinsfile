@@ -3,15 +3,9 @@ withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_hos
 	echo "linux_user - $linux_user"
 }
 
-def remote = [:]
-remote.name = "smulkutk"
-remote.host = "testlinux12.us.alcatel-lucent.com"
-remote.user = "smulkutk"
-remote.password = "tigris"
-remote.allowAnyHosts = true
-
 pipeline {
     agent any
+    def remote = [:]
     environment {
 	MY_TESTLINUX_HOST   = credentials('MY_TESTLINUX_HOST')
 	MY_TESTLINUX_USER   = credentials('MY_TESTLINUX_USER')

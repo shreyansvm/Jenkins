@@ -3,20 +3,19 @@ withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_hos
 	echo "linux_user - $linux_user"
 }
 
+def remote = [:]
+
 pipeline {
     agent any
-    node {
-    	def remote = [:]
-    }
     environment {
 	MY_TESTLINUX_HOST   = credentials('MY_TESTLINUX_HOST')
 	MY_TESTLINUX_USER   = credentials('MY_TESTLINUX_USER')
 	MY_TESTLINUX_PASSWD = credentials('MY_TESTLINUX_PASSWD')
 	
-	remote.name = credentials('MY_TESTLINUX_USER')
-	remote.host = credentials('MY_TESTLINUX_HOST')
-	remote.user = credentials('MY_TESTLINUX_USER')
-	remote.password = credentials('MY_TESTLINUX_PASSWS')
+	remote.name = "${env.MY_TESTLINUX_USER}"
+	remote.host = "${env.MY_TESTLINUX_HOST}"
+	remote.user = "${env.MY_TESTLINUX_USER}"
+	remote.password = "${env.MY_TESTLINUX_PASSWS}"
     }
     stages {
 	stage('Build-Details') {

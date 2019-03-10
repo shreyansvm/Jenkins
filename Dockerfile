@@ -1,3 +1,2 @@
-FROM scratch
-ADD helloWorldC /
-CMD ["/helloWorldC"]
+FROM alpine
+CMD ["echo", "####### helloWorld ###### from Alpine Linux container"]

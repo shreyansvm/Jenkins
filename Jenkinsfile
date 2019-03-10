@@ -41,9 +41,7 @@ remote.password = "tigris"
 
 pipeline {
     
-    agent {
-    	dockerfile true
-    }
+    agent any
 
     options {
 		// Specifying a global execution timeout of one hour, after which Jenkins will abort the Pipeline run.
@@ -148,6 +146,12 @@ pipeline {
 			steps {
 				echo 'Current Build is successful.. Deploying ...\n'
 		    }
+		}
+
+		stage('Docker-Hello-World') {
+			steps {
+				sh 'sudo docker run hello-world'
+			}
 		}
     
 	}

@@ -1,2 +1,5 @@
 FROM alpine
-CMD ["echo", "####### helloWorld ###### from Alpine Linux container"]
+
+COPY run_from_container.sh /run_from_container.sh
+
+CMD ["/run_from_container.sh"]

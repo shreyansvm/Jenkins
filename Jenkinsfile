@@ -41,7 +41,9 @@ remote.password = "tigris"
 
 pipeline {
     
-    agent any
+    agent {
+    	dockerfile true
+    }
 
     options {
 		// Specifying a global execution timeout of one hour, after which Jenkins will abort the Pipeline run.

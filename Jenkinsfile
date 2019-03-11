@@ -35,6 +35,7 @@ pipeline {
 
 		stage('Docker-Hello-World') {
 			steps {
+				sh 'whoami'
 				sh 'sudo docker run hello-world'
 			}
 		}

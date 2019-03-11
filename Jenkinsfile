@@ -1,9 +1,7 @@
 
 pipeline {
     
-    agent {
-    	dockerfile true
-    }
+    agent any
 
     options {
 		// Specifying a global execution timeout of one hour, after which Jenkins will abort the Pipeline run.

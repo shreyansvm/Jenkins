@@ -1,11 +1,5 @@
-FROM jenkins/jenkins
+FROM alpine
 
-USER root
-RUN apt-get update \
-      && apt-get install -y sudo \
-      && rm -rf /var/lib/apt/lists/*
-RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
+COPY run_from_container.sh /run_from_container.sh
 
-USER jenkins
-COPY plugins.txt /usr/share/jenkins/plugins.txt
-RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
+CMD ["/run_from_container.sh"]

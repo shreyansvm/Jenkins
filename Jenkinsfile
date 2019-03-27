@@ -40,7 +40,8 @@ pipeline {
 		// 	Example : cron('H */4 * * 1-5')
 
 		// At minute 1 past every hour on every day-of-week from Monday through Friday.
-		pollSCM('1 */1 * * 1-5')
+		//		Example : pollSCM('1 */1 * * 1-5')
+		pollSCM('* * * * *')
     }
 
     stages {
@@ -64,25 +65,24 @@ pipeline {
 				echo "Updating libraries (if required) ..\n"
 	        }
 	    }
-	    stage('Test') {
+	    stage('Run-shell-commands') {
 	        steps {
 	            echo 'Testing ..\n'
-				sh 'cat Jenkinsfile'
-				sh 'chmod 777 telnet_shell_script.sh'
+				// sh 'cat Jenkinsfile'
+
+				// you can print the Jenkins Server's Env variables
 				sh 'printenv'
-				sh 'cat telnet_shell_script.sh'
-				sh 'chmod 777 test_shell_script.sh'
-				sh 'cat test_shell_script.sh'
+
 				sh 'sleep 5'
+
+				// Change access permissions and run a shell script.
+				// This script/file should be pushed to your GIT repo. 
+				sh 'chmod 777 test_shell_script.sh'
 				sh './test_shell_script.sh'
-				
-				withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
-					    echo "inside withCrendentials block\n"
-				}
 	        }
 	    }
 
-		stage('Test-SSH') {
+		stage('Run-MG-Express') {
 	        steps {
 
 				withCredentials([string(credentialsId: 'MY_TESTLINUX_HOST', variable: 'linux_host'), string(credentialsId: 'MY_TESTLINUX_USER', variable: 'linux_user'), string(credentialsId: 'MY_TESTLINUX_PASSWD', variable: 'linux_pass')]) {
@@ -115,8 +115,8 @@ pipeline {
 	}
      
     post {
-		// The post section defines one or more additional steps that are run upon the completion of a Pipeline’s or stage’s run (depending on the location of the post section within the Pipeline).
-		// 'post' can support any of of the following post-condition blocks: always, changed, fixed, regression, aborted, failure, success, unstable, unsuccessful, and cleanup. 
+		// The post section defines one or more additional steps that are run upon the completion of a Pipeline
+		// 'post' can support any of of the following post-condition blocks: always, changed, fixed, regression, aborted, failure, 		success, unstable, unsuccessful, and cleanup. 
 
         always {
             echo "Always running post stages code ..\n"

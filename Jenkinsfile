@@ -47,7 +47,7 @@ pipeline {
     stages {
 	// Containing a sequence of one or more stage directives, the stages section is where the bulk of the "work" described by a Pipeline will be located.	
 
-		stage('Build-Details') {
+		stage('Job-Details') {
 		    steps {
 				echo "Running ${env.JOB_NAME} ${env.BUILD_ID} on ${env.JENKINS_URL}"
 		    }
